@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShoppingPage extends StatefulWidget {
   ShoppingPage({Key key}) : super(key: key);
@@ -8,7 +9,7 @@ class ShoppingPage extends StatefulWidget {
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
-  var shoppingList = List<String>();
+//  var shoppingList = List<String>();
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
@@ -67,38 +68,48 @@ class _ShoppingPageState extends State<ShoppingPage> {
           ));
         },
       ),
-      body: AnimatedList(
-        key: _listKey,
-        initialItemCount: shoppingList.length,
-        itemBuilder: (context, index, animation) => _buildItem(context, shoppingList[index], animation),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return const LinearProgressIndicator();
+          return AnimatedList(
+            key: _listKey,
+            initialItemCount: snapshot.data.documents.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(context, snapshot.data.documents[index], animation);
+            }
+          );
+        }
       )
     );
   }
 
-  void pushShoppingList(String title) {
+  void pushShoppingList(String title) async {
+    await Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").add({'listName': '$title'});
     setState(() {
-      shoppingList.insert(0, title);
       _listKey.currentState.insertItem(0);
     });
   }
-  
-  void popShoppingList(index) {
-    setState(() {
-      var itemToRemove = shoppingList.removeLast();
-      _listKey.currentState.removeItem(
-          index, (context, animation) => _buildItem(context, itemToRemove, animation),
-          duration: const Duration(milliseconds: 250));
-    });
-  }
 
-  Widget _buildItem(BuildContext context, String item, Animation<double> animation) {
+//  void popShoppingList(DocumentSnapshot doc) {
+//    setState(() {
+//
+//      Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").document(doc.documentID).delete();
+//      var itemToRemove = shoppingList.removeLast();
+//      _listKey.currentState.removeItem(
+//          doc., (context, animation) => _buildItem(context, itemToRemove, animation),
+//          duration: const Duration(milliseconds: 250));
+//    });
+//  }
+
+  Widget _buildItem(BuildContext context,  DocumentSnapshot item, Animation<double> animation) {
     return SizeTransition(
       sizeFactor: animation,
       child: Card(
         color: Colors.redAccent,
         elevation: 3.0,
         shape: new RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0)
+            borderRadius: BorderRadius.circular(15.0),
         ),
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
@@ -106,8 +117,10 @@ class _ShoppingPageState extends State<ShoppingPage> {
               contentPadding: EdgeInsets.symmetric(
                   horizontal: 20.0, vertical: 10.0),
               leading: Container(child: Icon(Icons.shopping_cart)),
-              title: new Text(item, style: TextStyle(color: Colors.white),),
-              trailing: Container(child: Icon(Icons.arrow_forward_ios),),
+              title: new Text(item['listName'], style: TextStyle(color: Colors.white),),
+              trailing: Container(
+                  child: Icon(Icons.arrow_forward_ios)),
+              onTap: () {},
             )
         ),
       ),
