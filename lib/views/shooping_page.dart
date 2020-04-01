@@ -11,6 +11,11 @@ class ShoppingPage extends StatefulWidget {
 class _ShoppingPageState extends State<ShoppingPage> {
 //  var shoppingList = List<String>();
 
+
+  var itemIndex = new List<int>();
+
+  var db = Firestore.instance;
+
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
@@ -69,7 +74,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
         },
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").snapshots(),
+        stream: db.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const LinearProgressIndicator();
           return AnimatedList(
@@ -85,22 +90,15 @@ class _ShoppingPageState extends State<ShoppingPage> {
   }
 
   void pushShoppingList(String title) async {
-    await Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").add({'listName': '$title'});
-    setState(() {
-      _listKey.currentState.insertItem(0);
+
     });
   }
 
-//  void popShoppingList(DocumentSnapshot doc) {
-//    setState(() {
-//
-//      Firestore.instance.collection("lists").document("7JNwPKwSX9UZEXizKg1x").collection("listitems").document(doc.documentID).delete();
-//      var itemToRemove = shoppingList.removeLast();
-//      _listKey.currentState.removeItem(
-//          doc., (context, animation) => _buildItem(context, itemToRemove, animation),
-//          duration: const Duration(milliseconds: 250));
-//    });
-//  }
+  void popShoppingList(DocumentSnapshot doc) {
+    setState(() {
+
+    });
+  }
 
   Widget _buildItem(BuildContext context,  DocumentSnapshot item, Animation<double> animation) {
     return SizeTransition(
