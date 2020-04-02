@@ -1,20 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:sharemycartmobile/models/item.dart';
 
 class ShoppingList {
-  String name;
-  String type;
-  List<Item> items;
+   String id;
+   String name;
+   String type;
+   List<Item> items;
 
-  List({ @required this.name, @required this.type, this.items });
+  ShoppingList({ this.id, this.name, this.type, this.items });
 
   factory ShoppingList.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data;
+    var data = doc.data;
 
     return ShoppingList(
-      name: data['name'],
-      type: data['type'],
-      items: data['items'],
-    );
+        id: data['id'],
+        name: data['name'],
+        type: data['type'],
+        items: data['items']);
   }
 }

@@ -9,7 +9,6 @@ class ShoppingPage extends StatefulWidget {
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
-//  var shoppingList = List<String>();
 
 
   var itemIndex = new List<int>();
@@ -52,7 +51,10 @@ class _ShoppingPageState extends State<ShoppingPage> {
                         return null;
                       },
                       onSaved: (value) {
-                        pushShoppingList(value);
+//                        pushShoppingList(value);
+                      setState(() {
+
+                      });
                       },
                     ),
                   ],
@@ -89,15 +91,15 @@ class _ShoppingPageState extends State<ShoppingPage> {
     );
   }
 
-  void pushShoppingList(String title) async {
-
-    });
-  }
-
-  void popShoppingList(DocumentSnapshot doc) {
-    setState(() {
-
-    });
+//  void pushShoppingList(String title) async {
+//
+//    });
+//  }
+//
+//  void popShoppingList(DocumentSnapshot doc) {
+//    setState(() {
+//
+//    });
   }
 
   Widget _buildItem(BuildContext context,  DocumentSnapshot item, Animation<double> animation) {
