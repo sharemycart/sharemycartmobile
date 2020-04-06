@@ -37,16 +37,30 @@ class _PageState extends State<Page> {
     NeedsPage(),
   ]);
 
+  final iconsList = List<IconData>.unmodifiable([
+    Icons.shopping_cart,
+    Icons.shop_two,
+  ]);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          bottomNavigationBar: MyNavBar(),
+          bottomNavigationBar: MyNavBar(
+            icons: iconsList,
+            onPressed: (i) => setState(() => navIndex = i),
+            activeIndex: navIndex,
+          ),
           body: pages[navIndex],
     );
   }
 }
 
 class MyNavBar extends StatefulWidget {
+  const MyNavBar({ @required this.icons, @required this.onPressed, @required this.activeIndex }) : assert(icons != null);
+  final List<IconData> icons;
+  final Function(int) onPressed;
+  final int activeIndex;
+
   @override
   _MyNavBarState createState() => _MyNavBarState();
 }
@@ -55,8 +69,18 @@ class _MyNavBarState extends State<MyNavBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 70,
-        color: Colors.amber,
+        height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          for (var i = 0; i < widget.icons.length; i++)
+            IconButton(
+              icon: Icon(widget.icons[i]),
+              color: i == widget.activeIndex ? Colors.deepOrange : Colors.black54,
+              onPressed: () => widget.onPressed(i),
+            ),
+        ],
+      ),
     );
   }
 }
