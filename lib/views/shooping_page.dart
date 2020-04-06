@@ -52,9 +52,6 @@ class _ShoppingPageState extends State<ShoppingPage> {
                       },
                       onSaved: (value) {
 //                        pushShoppingList(value);
-                      setState(() {
-
-                      });
                       },
                     ),
                   ],
@@ -89,17 +86,15 @@ class _ShoppingPageState extends State<ShoppingPage> {
         }
       )
     );
+
   }
 
-//  void pushShoppingList(String title) async {
-//
-//    });
-//  }
-//
-//  void popShoppingList(DocumentSnapshot doc) {
-//    setState(() {
-//
-//    });
+  void pushShoppingList(String title) async {
+
+  }
+
+  void popShoppingList(DocumentSnapshot doc) {
+
   }
 
   Widget _buildItem(BuildContext context,  DocumentSnapshot item, Animation<double> animation) {
