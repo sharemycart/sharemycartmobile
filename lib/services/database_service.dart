@@ -37,7 +37,7 @@ class DatabaseService {
 
   Future<void> deleteShoppingList(String documentID) async {
     Map updateToArchived = { ListDatabaseConstants.LIFECYCLE_STATUS_KEY : ListDatabaseConstants.LIFECYCLE_STATUS_ARCHIVED };
-    await _db.collection("lists").document(documentID).updateData(updateToArchived);
+    await _db.collection("lists").document(documentID).delete();
   }
 
 }

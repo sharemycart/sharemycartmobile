@@ -20,6 +20,6 @@ class ListDatabaseConstants {
   static const LIST_OWNER_ID_KEY = "shoppingListOwnerId";
   static const LIFECYCLE_STATUS_KEY = "lifecycleStatus";
   static const LIFECYCLE_STATUS_OPEN = "open";
-  static const LIFECYCLE_STATUS_ARCHIVED = "archived";
+  static const dynamic LIFECYCLE_STATUS_ARCHIVED = "archived";
   static const USER_ID_KEY = "userId";
 }

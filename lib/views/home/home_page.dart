@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sharemycartmobile/services/auth_service.dart';
 import 'package:sharemycartmobile/views/home/shooping_page.dart';
 import 'package:sharemycartmobile/views/home/needs_page.dart';
 
 class HomePage extends StatelessWidget {
+
+  AuthService authService = new AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +18,12 @@ class HomePage extends StatelessWidget {
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: Icon(Icons.search),
+              child: IconButton(
+                icon: Icon(Icons.exit_to_app),
+                onPressed: () {
+                  authService.signOut();
+                },
+              ),
             )
           ],
           elevation: 5.0,

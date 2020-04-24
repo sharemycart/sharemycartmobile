@@ -12,7 +12,6 @@ class _RenderListState extends State<RenderList> {
   @override
   Widget build(BuildContext context) {
     final shoppingLists = Provider.of<List<ShoppingList>>(context) ?? [];
-
     for (var list in shoppingLists) {
       print('docID: ${list.docId}');
       print('list name: ${list.name}');
@@ -41,6 +40,9 @@ class _RenderListState extends State<RenderList> {
                             icon: Icon(Icons.delete),
                             onPressed: () async {
                               await DatabaseService().deleteShoppingList(shoppingLists[index].docId);
+                              setState(() {
+                                shoppingLists.removeAt(index);
+                              });
                             },
                         ),
                     ),
@@ -48,9 +50,9 @@ class _RenderListState extends State<RenderList> {
                   ),
               ),
             ),
-            onDismissed: (direction) {
+            onDismissed: (direction) async {
+              await DatabaseService().deleteShoppingList(shoppingLists[index].docId);
               setState(() {
-                DatabaseService().deleteShoppingList(shoppingLists[index].docId);
                 shoppingLists.removeAt(index);
               });
             },

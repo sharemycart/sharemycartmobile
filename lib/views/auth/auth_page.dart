@@ -102,9 +102,16 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                     CustomButton(text: "Login", width: 300, onPressed: () {
                       if (widget._formKey.currentState.validate()) {
                         widget._formKey.currentState.save();
-                        authService.signIn(widget.email, widget.password);
+                        authService.signInWithEmailAndPassword(widget.email, widget.password);
                       }
                     }),
+                    Padding(padding: EdgeInsets.only(top: 30)),
+                    MaterialButton(
+                      child: Text("SignIn with Google"),
+                      onPressed: () {
+                        authService.signInWithGoogle();
+                      },
+                    )
                   ],
                 ),
               ),
