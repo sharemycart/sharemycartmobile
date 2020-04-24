@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sharemycartmobile/services/auth_service.dart';
 import 'package:sharemycartmobile/views/custom_button.dart';
-import 'package:sharemycartmobile/views/home_page.dart';
+import 'package:sharemycartmobile/views/home/home_page.dart';
 
 class Auth extends StatelessWidget {
   @override
@@ -12,6 +12,7 @@ class Auth extends StatelessWidget {
     bool loggedIn = user != null;
 
     if (loggedIn) {
+      print(user.uid);
       return HomePage();
     } else {
       return AuthLoginPage();
@@ -33,7 +34,6 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,

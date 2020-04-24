@@ -8,10 +8,13 @@ class AuthService {
     return authResult.user.uid;
   }
 
-
   Future<String> signUpWithEmailAndPassword(String email, password) async {
    var authResult = await _auth.createUserWithEmailAndPassword(email: email, password: password);
    return authResult.user.uid;
+  }
+
+  Future<String> get firebaseUserUID async {
+    return await _auth.currentUser().then((value) => value.uid);
   }
 
 }

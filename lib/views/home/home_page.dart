@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sharemycartmobile/views/shooping_page.dart';
-import 'package:sharemycartmobile/views/needs_page.dart';
+import 'package:sharemycartmobile/views/home/shooping_page.dart';
+import 'package:sharemycartmobile/views/home/needs_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -39,7 +39,7 @@ class _PageState extends State<Page> {
 
   final iconsList = List<IconData>.unmodifiable([
     Icons.shopping_cart,
-    Icons.shop_two,
+    Icons.share,
   ]);
 
   @override
@@ -69,7 +69,7 @@ class _MyNavBarState extends State<MyNavBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 100,
+        height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
